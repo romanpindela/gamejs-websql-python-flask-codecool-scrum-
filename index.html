@@ -8,6 +8,50 @@
 <!--    <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=">-->
 </head>
 <body>
+    <div class="popup_login" hidden>
+        <div class="overlay"></div>
+        <div class="popup_content">
+            <div class="login_title">Login</div>
+            <div class="login_input_name">
+                <input class="login_box" type="text" placeholder="Input name here:" maxlength="20">
+            </div>
+            <div class="login_levels">
+                <div class="title_level">
+                    <span>Difficulty</span>
+                </div>
+                <div class="levels">
+                    <div class="btn_lvl">
+                        <span class="btn_low">Low</span>
+                    </div>
+                    <div class="btn_lvl">
+                        <span class="btn_mid">Middle</span>
+                    </div>
+                    <div class="btn_lvl">
+                        <span class="btn_high">High</span>
+                    </div>
+                </div>
+            </div>
+            <div class="login_types">
+                <div class="title_type">
+                    <span>Type</span>
+                </div>
+                <div class="types">
+                    <div class="btn_type">
+                        <span class="btn_animals">Animals</span>
+                    </div>
+                    <div class="btn_type">
+                        <span class="btn_fruits">Fruits</span>
+                    </div>
+                    <div class="btn_type">
+                        <span class="btn_minions">Minions</span>
+                    </div>
+                </div>
+            </div>
+            <div class="play">
+                <span class="play_btn" tabindex="1">Play</span>
+            </div>
+        </div>
+    </div>
     <div id="content">
         <div class="cards-container">
                 <div class="card" id="1">
@@ -76,7 +120,7 @@
                 </div>
         </div>
             <div class="stats-container">STATS
-                <div class="game-stats">Player's name: <span id="player-name">Marian</span></div>
+                <div class="game-stats">Player's name: <span id="player-name" class="get_username">UserName</span></div>
                 <div class="game-stats">Time remaining: <span id="time-remain">60</span></div>
                 <div class="game-stats">Flips done: <span id="flips">10</span></div>
             </div>
