@@ -1,67 +1,179 @@
-initGame();
-var a = 15;
+var chosenGameLevel = "easy";
+  var chosenBoard = "cookies";
+  var userName = "";
+  var userCounts = 0;
 
-function initGame() {
-    loginPopup();
+  // current game parameters
+  var currentGameDrawnImages = [];
+  var currentGameDrawnImagesPairs = [];
 
-}
+  // game logic
+  var availableBoards = ["animals", "cookies", "fruits", "minions"];
+  var images = [
+      "image16.jpeg", "image15.jpeg", "image14.jpeg", "image13.jpeg",
+      "image12.jpeg", "image11.jpeg", "image10.jpeg", "image9.jpeg",
+      "image8.jpeg", "image7.jpeg", "image6.jpeg",
+      "image5.jpeg", "image4.jpeg", "image3.jpeg",
+      "image2.jpeg", "image1.jpeg"
+  ];
+  var closedImageCardSrc = "static/images/hidden.jpg"
 
-function loginPopup(){
-    var lvl_buttons = document.body.getElementsByClassName('btn_lvl');
-    var type_buttons = document.body.getElementsByClassName('btn_type');
-    let user_name_box = document.body.querySelectorAll('input.login_box')[0];
-    let play_btn = document.body.querySelectorAll('.play_btn')[0];
-    let popup_login = document.body.getElementsByClassName('popup_login')[0];
-    Object(play_btn).addEventListener('click', () => {
-        let cookies = actual_Cookies();
-        if (cookies['difficulty'].length > 0 && user_name_box.value.length > 0 && cookies['type'].length > 0){
-            document.cookie = `user_name=${user_name_box.value}`;
-            set_user_name()
-            setTimeout(() => Object(popup_login).hidden = true, 1000);
-        }
-        else{
-            alert('Please input/select all parameters');
-        };
-    });
-    set_onClick_login_buttons(lvl_buttons, 'difficulty');
-    set_onClick_login_buttons(type_buttons, 'type');
-}
+  var gameLevels = {
+      "easy":4,
+      "medium":6,
+      "hard":8
+  };
+
+    var board = document.getElementsByClassName("cards-container"); // [0] because there is only 1 board ( I mean tag with such class name);
+    var cards = document.getElementsByClassName("card")
 
 
-function set_onClick_login_buttons(buttons, cookie_name){
-    for (let button of buttons) {
-        Object(button).addEventListener('click', () => {
-            if (button.style.backgroundColor != 'blue'){
-                for (let old_button of buttons){
-                    if (old_button != buttons){
-                        old_button.style.backgroundColor = 'white';
-                        old_button.style.color = 'black';
-                    }
-                }
-                button.style.backgroundColor = 'blue';
-                button.style.color = 'white';
-                document.cookie = `${cookie_name}=${Object(button).childNodes[1].innerHTML}`;
-            }
-            else{
-                button.style.backgroundColor = 'white';
-                button.style.color = 'black';
-            }
-        });
+  function initGame() {
+
+
+      /* Phases for preparing new game
+      i.e. entering new game or refreshing it while playing */
+      /*
+      /* Phase 1: drawing pairs of images */
+      console.log(images);
+      currentGameDrawnImages = drawImagesForLevel(shuffleCards(images), chosenGameLevel); // pick first shuffled cards for current level
+      currentGameDrawnImagesPairs = shuffleCards(addSecondCardToCreateAPair(currentGameDrawnImages));
+
+      /* Phase 2: drawing a board of cards */
+      prepareBoard(currentGameDrawnImagesPairs);
+      countdown();
+      closeAllCards(cards);
+      initClickOnCards(cards);
+
+  };
+
+
+  /*
+  * Steps behind logic for creating random size board of card with random images
+  * from chosen image set
+  */
+
+  /* Step 1: shuffle all available images for current images set*/
+  // I use Fisher-Yates shuffle, it's very good for shuffling list
+  function shuffleCards(arrayOfCards) {
+    var currentIndex = arrayOfCards.length, temporaryValue, randomIndex;
+
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = arrayOfCards[currentIndex];
+      arrayOfCards[currentIndex] = arrayOfCards[randomIndex];
+      arrayOfCards[randomIndex] = temporaryValue;
+    };
+    return arrayOfCards;
+  };
+
+  /* Step 2: I draw (from shuffled images),
+  *  I mean I choose first images according for chosen game level
+  */
+  function drawImagesForLevel(arrayOfImages, gameLevel) {
+      return arrayOfImages.slice(0,gameLevels[gameLevel]);
+  };
+
+  /* Step 3: I add second card for each chosen image to guess
+  *  to create a pair
+  */
+  function addSecondCardToCreateAPair(arrayOfImages){
+      arrayWithAddedSecondImage = [...arrayOfImages, ...arrayOfImages];
+      return arrayWithAddedSecondImage;
+  };
+
+
+  function prepareBoard(imagesPairs){
+     for (let imageIndex= 0; imageIndex < imagesPairs.length; imageIndex++){
+         // creating newCard
+         var newCard = document.createElement("div");
+
+         newCard.classList.add('card');
+         newCard.id = imageIndex;
+
+         // inserting button with image in newCard
+         newCardButton = document.createElement("button");
+         newCardButtonImage = document.createElement("img");
+
+         let newCardimageSource = "static/images/" + chosenBoard + "/" + imagesPairs[imageIndex];
+         newCardButton.value = newCardimageSource;
+         newCardButtonImage.src = newCardimageSource; //closedImageCardSrc;
+
+
+         newCardButton.appendChild(newCardButtonImage);
+         newCard.appendChild(newCardButton);
+
+         // appending whole newCard on board
+         board[0].appendChild(newCard);
+     };
+  };
+
+
+
+  function initClickOnCards(cards){
+      for ( let card of cards) {
+          initClickOnCard(card);
+      }
+  }
+
+  function initClickOnCard(card){
+      cardButon = card.childNodes[0]
+      console.log(cardButon);
+
+    cardButon.addEventListener("click", openCard);
+  }
+
+  function openAllCards(){
+    for (let card of cards){
+        openCard(card);
     }
-}
+  };
 
-
-function actual_Cookies(){
-    let cookies = {
-
+  function closeAllCards(cards){
+    for (let card of cards){
+        closeCard(card);
     }
-    for (let cookie of document.cookie.split('; ')){
-        cookies[cookie.split('=')[0]] = cookie.split('=')[1];
-    }
-    return cookies;
+  }
 
+  function openCard(e){
+      console.log(e);
+    this.removeChild(this.childNodes[0]) // delete <img> tag from button Card
+      newImgForButton = document.createElement("img");
+        newImgForButton.src = this.value;
+    this.appendChild(newImgForButton) // inserting <img> tag for opened state
+  }
+
+  function closeCard(card){
+      let button = document.getElementById(card.id).childNodes[0];
+      let img = document.getElementById(card.id).childNodes[0].childNodes[0];
+    button.removeChild(img);
+    newImgForButton = document.createElement("img");
+    newImgForButton.src = closedImageCardSrc;
+    button.appendChild(newImgForButton);
+      console.log(button);
+  }
+
+
+  function checkOpenedCardsIfMatched(){
+
+  }
+
+  function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
-function set_user_name(){
-    user_name_node = document.querySelector('.get_username');
-    user_name_node.innerHTML = actual_Cookies()['user_name'];
-}
+
+  async function countdown() {
+      await sleep(3000);
+  }
+
+
+  function updateTimer(){
+
+  }
+
+  function getAHint(){
+
+  }
+
+  initGame();
