@@ -68,7 +68,7 @@ img {
 	font-size: 14pt;
 	font-variant: small-caps;
 }
-.popup_login .overlay{
+.overlay{
     position: fixed;
     top: 0;
     bottom: 0;
@@ -78,7 +78,7 @@ img {
     z-index: -1;
 }
 
-.popup_content{
+.popup_login_content{
     position: fixed;
     background-color: white;
     width: 25%;
@@ -97,6 +97,45 @@ img {
     row-gap: 10px;
 
 }
+
+.popup_result_content{
+    position: fixed;
+    background-color: white;
+    width: 40%;
+    height: 60%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 4fr;
+    z-index: 0;
+    border-radius: 40px;
+    box-shadow: blue 0 0 10px;
+    min-height: 300px;
+    overflow: hidden;
+    row-gap: 10px;
+
+}
+
+.popup_current_result{
+    display: grid;
+    border-radius: 30px;
+    border: black 2px solid;
+    grid-template-rows: 20% 80%;
+}
+.popup_current_result .parameters{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.popup_current_result .parameters > *{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
 
 .popup_login .login_levels{
     display: grid;
@@ -140,10 +179,10 @@ img {
     column-gap: 40px;
 }
 
-.popup_login .login_title{
+.popup_title{
     justify-self: center;
-    align-self: end;
-    font-size: 110%;
+    align-self: center;
+    font-size: 150%;
     width: 100%;
     text-align: center;
     font-weight: bold;
@@ -215,4 +254,35 @@ img {
 
 .play_btn:hover{
     box-shadow: 0 0 10px blue;
+}
+
+.popup_result_statistic{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 10px;
+    margin: 0 10px 10px 10px;
+}
+.popup_result_statistic > *{
+    border: black 2px solid;
+}
+.result_statistic_pos{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 15% 85%;
+    background-color: #178af3;
+    border-radius: 30px;
+    color: white;
+}
+.result_title{
+    text-align: center;
+}
+
+.popup_title_s{
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    bottom: 0;
+    padding: 0;
 }

@@ -1,5 +1,4 @@
 initGame();
-var a = 15;
 
 function initGame() {
     loginPopup();
@@ -64,4 +63,8 @@ function actual_Cookies(){
 function set_user_name(){
     user_name_node = document.querySelector('.get_username');
     user_name_node.innerHTML = actual_Cookies()['user_name'];
+}
+
+function get_user_name(){
+    return  actual_Cookies()['user_name'];
 }
