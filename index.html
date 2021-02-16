@@ -8,10 +8,10 @@
 <!--    <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=">-->
 </head>
 <body>
-    <div class="popup_login" hidden>
+    <div class="popup_login">
         <div class="overlay"></div>
-        <div class="popup_content">
-            <div class="login_title">Login</div>
+        <div class="popup_login_content">
+            <div class="popup_title">Login</div>
             <div class="login_input_name">
                 <input class="login_box" type="text" placeholder="Input name here:" maxlength="20">
             </div>
@@ -21,13 +21,13 @@
                 </div>
                 <div class="levels">
                     <div class="btn_lvl">
-                        <span class="btn_low">Low</span>
+                        <span class="btn_low">Easy</span>
                     </div>
                     <div class="btn_lvl">
-                        <span class="btn_mid">Middle</span>
+                        <span class="btn_mid">Medium</span>
                     </div>
                     <div class="btn_lvl">
-                        <span class="btn_high">High</span>
+                        <span class="btn_high">Hard</span>
                     </div>
                 </div>
             </div>
@@ -45,6 +45,9 @@
                     <div class="btn_type">
                         <span class="btn_minions">Minions</span>
                     </div>
+                    <div class="btn_type">
+                        <span class="btn_cookies">Cookies</span>
+                    </div>
                 </div>
             </div>
             <div class="play">
@@ -52,7 +55,8 @@
             </div>
         </div>
     </div>
-    <div id="content">
+    <div class="page" hidden>
+        <div id="content">
         <div class="cards-container">
             <!-- Here goes javascript code
             prepareBoard() function -->
@@ -65,7 +69,54 @@
             <div class="help-container">
                 <div class="game-help"><span id="player-name"></span>Drag and drop to get a hint</div>
             </div>
+        </div>
     </div>
+    <div class="popup_result" hidden>
+        <div class="overlay"></div>
+        <div class="popup_result_content">
+            <div class="popup_title">Results</div>
+            <div class="popup_current_result">
+                <div class="result_title" style="font-size: 20px; font-weight: bold;">Current</div>
+                <div class="parameters">
+                    <div class="name">
+                        <div class="popup_title_s">Name</div>
+                        <div class="value">NeverGo</div>
+                    </div>
+                    <div class="time">
+                        <div class="popup_title_s">Time</div>
+                        <div class="value">10 sec</div>
+                    </div>
+                    <div class="flips">
+                        <div class="popup_title_s">Flips</div>
+                        <div class="value">4</div>
+                    </div>
+                    <div class="score">
+                        <div class="popup_title_s">Score</div>
+                        <div class="value">149 xp</div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup_result_statistic">
+                <div class="result_statistic_pos">
+                    <div class="result_title">Low</div>
+                    <div class="result_results">
+                        1 - NeverGo - 1897xp
+                    </div>
+                </div>
+                <div class="result_statistic_pos">
+                    <div class="result_title">Middle</div>
+                    <div class="result_results">
+                        1 - NeverGo - 1897xp
+                    </div>
+                </div>
+                <div class="result_statistic_pos">
+                    <div class="result_title">High</div>
+                    <div class="result_results">
+                        1 - NeverGo - 1897xp
+                    </div>
+                </div>
+            </div>
+        </div>
 <script src="game.js"></script>
 </body>
 </html>
