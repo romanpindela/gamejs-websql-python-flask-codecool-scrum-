@@ -44,6 +44,7 @@ function runAnimation() {
 				finalMessage.classList.add('show');
 				Object(counterContent).hidden = true;
 				Object(counterFinalContent).hidden = true;
+				timeCount();
 			}
 		});
 	});

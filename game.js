@@ -3,6 +3,7 @@ var chosenGameLevel = "hard";
 var chosenBoard = "cookies";
 var userName = "";
 var userCounts = 0;
+var timeObj = Object();
 
 
 
@@ -13,6 +14,7 @@ var currentGameDrawnImagesPairs = [];
 var currentGameOpenedCards = [];
 var currentGuessedPairsCards = 0;
 var finishedGameState = false;
+let currentGameTime = 0;
 
 // game logic
 timeForUserToRemember = 5000;
@@ -48,6 +50,15 @@ function initGame() {
     /* Phase 1: drawing pairs of images */
     loginPopup();
 };
+
+function timeCount(){
+    let time_node = document.querySelector('.time-remain');
+    timeObj = setInterval(() => {
+        currentGameTime++;
+        time_node.innerHTML = currentGameTime.toString();
+    }, 1000);
+
+}
 
 function set_game_board(){
     console.log(images);
@@ -263,7 +274,7 @@ function setAfterLoginParameters(user_name, difficulty, type){
 }
 
 function set_cookie(key, value){
-      document.cookie = `${key}=${value}`;
+      document.cookie = key + '=' + value;
 }
 
 
@@ -309,6 +320,7 @@ function get_user_name(){
 function checkEndGame(){
       if (currentGuessedPairsCards === gameLevels[chosenGameLevel]){
           finishedGameState = true;
+          clearInterval(timeObj);
       } else {
           false;
       }
