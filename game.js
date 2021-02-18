@@ -58,6 +58,7 @@ function set_game_board(){
     /* Phase 2: drawing a board of cards */
     prepareBoard(currentGameDrawnImagesPairs);
     initClickOnCards(cards);
+    initStats();
 
     blockUserClickingWhileCheckingPair = true; // prevent clicking on cards while cards are shown
     runAnimation();
@@ -161,8 +162,8 @@ function setAfterLoginParameters(user_name, difficulty, type){
     }
   }
 
-  function moveUserMovesCounter(){
-        flipsDone++;
+  function moveUserMovesCounter(increse){
+        flipsDone = flipsDone + increse;
         flipsDoneOnHTML = document.getElementById('flips');
         flipsDoneOnHTML.innerText = flipsDone;
   }
@@ -178,6 +179,18 @@ function setAfterLoginParameters(user_name, difficulty, type){
 
       blockUserClickingWhileCheckingPair = false;
   }
+
+  function setCardColor(color){
+      if (color === "green"){
+				// finalMessage.classList.add('show');
+      } else if (color === "red"){
+
+      } else if (color === "grey"){
+
+      }
+
+  }
+
 
   function cardsPairUnmatched(){
         closeCard(currentGameOpenedCards[0]);
@@ -199,15 +212,22 @@ function setAfterLoginParameters(user_name, difficulty, type){
         let openedCardsCount = currentGameOpenedCards.length;
         if (openedCardsCount === 2){
             blockUserClickingWhileCheckingPair = true;
-            moveUserMovesCounter();
+            moveUserMovesCounter(1);
             if(currentGameOpenedCards[0].value === currentGameOpenedCards[1].value){
-                cardsPairMatched();
+                setTimeout(cardsPairMatched,1000);
+                updateleftCardsPairs(1)
             } else {
                 setTimeout(cardsPairUnmatched,1000);
             }
         }
     }
     console.log(currentGameOpenedCards);
+  }
+
+  function initStats(){
+      leftCardsPair = gameLevels[chosenGameLevel];
+      updateleftCardsPairs(0);
+      moveUserMovesCounter(0);
   }
 
   function closeCard(card){
@@ -225,7 +245,11 @@ function setAfterLoginParameters(user_name, difficulty, type){
     button.appendChild(newImgForButton);
   }
 
-
+function updateleftCardsPairs(decrese){
+      leftCardsPair = leftCardsPair - decrese;
+      leftCardsPairHtml = document.getElementById('leftCardsPairs');
+      leftCardsPairHtml.innerText = leftCardsPair;
+}
   function checkOpenedCardsIfMatched(){
 
   }
