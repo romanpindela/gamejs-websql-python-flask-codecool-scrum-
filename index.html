@@ -3,7 +3,8 @@
 <head>
     <title>Memory Minions</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css"
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="static/css/animated_countdown.css">
     <!-- http://proger.i-forge.net/The_smallest_transparent_pixel/ -->
 <!--    <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=">-->
 </head>
@@ -71,6 +72,24 @@
             </div>
         </div>
     </div>
+
+    <div class="counter" hidden>
+        <div class="nums">
+            <span class="in">5</span>
+                        <span>4</span>
+                        <span>3</span>
+            <span>2</span>
+            <span>1</span>
+            <span>0</span>
+        </div>
+        <h4>Get Ready</h4>
+    </div>
+
+    <div class="final" hidden>
+        <h1>Good luck!</h1>
+        <button id="replay">Reset game</button>
+    </div>
+
     <div class="popup_result" hidden>
         <div class="overlay"></div>
         <div class="popup_result_content">

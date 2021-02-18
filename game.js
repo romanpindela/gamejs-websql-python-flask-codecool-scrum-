@@ -9,6 +9,7 @@ var currentGameDrawnImages = [];
 var currentGameDrawnImagesPairs = [];
 
 // game logic
+timeForUserToRemember = 5000;
 var availableBoards = ["animals", "cookies", "fruits", "minions"];
 var images = [
     "image16.jpeg", "image15.jpeg", "image14.jpeg", "image13.jpeg",
@@ -47,8 +48,8 @@ function set_game_board(){
     /* Phase 2: drawing a board of cards */
     prepareBoard(currentGameDrawnImagesPairs);
     initClickOnCards(cards);
-    countdown();
-    closeAllCards(cards);
+    runAnimation();
+    setTimeout(closeAllCards, timeForUserToRemember, cards);
 }
 
 function setAfterLoginParameters(user_name, difficulty, type){
@@ -170,20 +171,14 @@ function setAfterLoginParameters(user_name, difficulty, type){
 
   }
 
-  function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-  async function countdown() {
-      await sleep(3000);
-  }
-
 
   function updateTimer(){
 
   }
 
+
   function getAHint(){
+
 
   }
   function loginPopup(){
@@ -254,7 +249,74 @@ function get_user_name(){
     return  actual_Cookies()['user_name'];
 }
 
-  initGame();
+
+
+
+
+
+
+
+/*
+* animated countdown
+* https://codepen.io/FlorinPop17/pen/LzYNWa
+*
+* */
+const nums = document.querySelectorAll('.nums span');
+const counter = document.querySelector('.counter');
+const finalMessage = document.querySelector('.final');
+const repl = document.getElementById('replay');
+
+let counterContent = document.body.getElementsByClassName('counter')[0];
+let counterFinalContent = document.body.getElementsByClassName('final')[0];
+
+
+
+function resetDOM() {
+	counter.classList.remove('hide');
+	finalMessage.classList.remove('show');
+
+	nums.forEach(num => {
+		num.classList.value = '';
+	});
+
+    nums[0].classList.add('in');
+
+
+}
+
+function runAnimation() {
+    Object(counterContent).hidden = false;
+    Object(counterFinalContent).hidden = false;
+
+
+	nums.forEach((num, idx) => {
+		const penultimate = nums.length - 1;
+		num.addEventListener('animationend', (e) => {
+			if(e.animationName === 'goIn' && idx !== penultimate){
+				num.classList.remove('in');
+				num.classList.add('out');
+			} else if (e.animationName === 'goOut' && num.nextElementSibling){
+				num.nextElementSibling.classList.add('in');
+			} else {
+				counter.classList.add('hide');
+				finalMessage.classList.add('show');
+				Object(counterContent).hidden = true;
+				Object(counterFinalContent).hidden = true;
+			}
+		});
+	});
+
+}
+
+repl.addEventListener('click', () => {
+	resetDOM();
+	runAnimation();
+});
+/* end of
+* animated countdown */
+
+
+initGame();
 
 function game(){
     initGame();
