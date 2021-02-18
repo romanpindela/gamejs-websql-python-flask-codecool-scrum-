@@ -4,12 +4,21 @@ var chosenBoard = "cookies";
 var userName = "";
 var userCounts = 0;
 
+
+
+
 // current game parameters
 var currentGameDrawnImages = [];
 var currentGameDrawnImagesPairs = [];
+var currentGameOpenedCards = [];
+var currentGuessedPairsCards = 0;
+var finishedGameState = false;
 
 // game logic
 timeForUserToRemember = 5000;
+
+var blockUserClickingWhileCheckingPair = false; // true or false (prevent superfast clicking and cheating)
+
 var availableBoards = ["animals", "cookies", "fruits", "minions"];
 var images = [
     "image16.jpeg", "image15.jpeg", "image14.jpeg", "image13.jpeg",
@@ -50,6 +59,7 @@ function set_game_board(){
     initClickOnCards(cards);
     runAnimation();
     setTimeout(closeAllCards, timeForUserToRemember, cards);
+
 }
 
 function setAfterLoginParameters(user_name, difficulty, type){
@@ -148,22 +158,67 @@ function setAfterLoginParameters(user_name, difficulty, type){
     }
   }
 
+  function moveUserMovesCounter(){
+
+  }
+
+  function cardsPairMatched(){
+      currentGameOpenedCards[0].disabled = 'true';
+      currentGameOpenedCards[1].disabled = 'true';
+      currentGameOpenedCards = [];
+      currentGuessedPairsCards++;
+
+      finishedGameState = checkEndGame();
+
+
+      blockUserClickingWhileCheckingPair = false;
+  }
+
+  function cardsPairUnmatched(){
+        closeCard(currentGameOpenedCards[0]);
+        closeCard(currentGameOpenedCards[1]);
+        currentGameOpenedCards = [];
+        blockUserClickingWhileCheckingPair = false;
+  }
+
   function openCard(e){
-      console.log(e);
-    this.removeChild(this.childNodes[0]) // delete <img> tag from button Card
-      newImgForButton = document.createElement("img");
-        newImgForButton.src = this.value;
-    this.appendChild(newImgForButton) // inserting <img> tag for opened state
+
+      if (blockUserClickingWhileCheckingPair === false){
+        currentGameOpenedCards.push(this);
+
+        this.removeChild(this.childNodes[0]) // delete <img> tag from button Card
+          newImgForButton = document.createElement("img");
+            newImgForButton.src = this.value;
+        this.appendChild(newImgForButton) // inserting <img> tag for opened state
+
+        let openedCardsCount = currentGameOpenedCards.length;
+        if (openedCardsCount === 2){
+            blockUserClickingWhileCheckingPair = true;
+            moveUserMovesCounter();
+            if(currentGameOpenedCards[0].value === currentGameOpenedCards[1].value){
+                cardsPairMatched();
+            } else {
+                setTimeout(cardsPairUnmatched,1000);
+            }
+        }
+    }
+    console.log(currentGameOpenedCards);
   }
 
   function closeCard(card){
-      let button = document.getElementById(card.id).childNodes[0];
-      let img = document.getElementById(card.id).childNodes[0].childNodes[0];
-    button.removeChild(img);
+      console.log(card)
+      if (card.tagName == "DIV") {
+          var button = document.getElementById(card.id).childNodes[0];
+          var img = document.getElementById(card.id).childNodes[0].childNodes[0];
+      } else if (card.tagName == "BUTTON") {
+          var button = card;
+          var img = card.childNodes[0];
+      }
+
+      button.removeChild(img);
     newImgForButton = document.createElement("img");
     newImgForButton.src = closedImageCardSrc;
     button.appendChild(newImgForButton);
-      console.log(button);
   }
 
 
@@ -211,6 +266,7 @@ function set_cookie(key, value){
       document.cookie = `${key}=${value}`;
 }
 
+
 function set_onClick_login_buttons(buttons, cookie_name){
     for (let button of buttons) {
         Object(button).addEventListener('click', () => {
@@ -250,6 +306,14 @@ function get_user_name(){
 }
 
 
+function checkEndGame(){
+      if (currentGuessedPairsCards === gameLevels[chosenGameLevel]){
+          finishedGameState = true;
+      } else {
+          false;
+      }
+      console.log(finishedGameState)
+}
 
 
 initGame();
