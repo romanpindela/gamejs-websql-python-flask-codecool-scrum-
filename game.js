@@ -3,7 +3,7 @@ var chosenGameLevel = "hard";
 var chosenBoard = "cookies";
 var userName = "";
 var userCounts = 0;
-
+var flipsDone = 0;
 
 
 
@@ -13,6 +13,7 @@ var currentGameDrawnImagesPairs = [];
 var currentGameOpenedCards = [];
 var currentGuessedPairsCards = 0;
 var finishedGameState = false;
+var leftCardsPair = 0;
 
 // game logic
 timeForUserToRemember = 5000;
@@ -57,9 +58,11 @@ function set_game_board(){
     /* Phase 2: drawing a board of cards */
     prepareBoard(currentGameDrawnImagesPairs);
     initClickOnCards(cards);
+
+    blockUserClickingWhileCheckingPair = true; // prevent clicking on cards while cards are shown
     runAnimation();
     setTimeout(closeAllCards, timeForUserToRemember, cards);
-
+    blockUserClickingWhileCheckingPair = false;
 }
 
 function setAfterLoginParameters(user_name, difficulty, type){
@@ -159,7 +162,9 @@ function setAfterLoginParameters(user_name, difficulty, type){
   }
 
   function moveUserMovesCounter(){
-
+        flipsDone++;
+        flipsDoneOnHTML = document.getElementById('flips');
+        flipsDoneOnHTML.innerText = flipsDone;
   }
 
   function cardsPairMatched(){
@@ -206,7 +211,6 @@ function setAfterLoginParameters(user_name, difficulty, type){
   }
 
   function closeCard(card){
-      console.log(card)
       if (card.tagName == "DIV") {
           var button = document.getElementById(card.id).childNodes[0];
           var img = document.getElementById(card.id).childNodes[0].childNodes[0];
@@ -312,7 +316,6 @@ function checkEndGame(){
       } else {
           false;
       }
-      console.log(finishedGameState)
 }
 
 
