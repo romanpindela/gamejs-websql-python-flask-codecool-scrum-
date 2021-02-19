@@ -54,7 +54,7 @@ body {
     height: 135px;
 }
 
-img {
+.card-box {
     width: 110px;
     height: 110px;
     border-radius: 20px;
@@ -112,7 +112,10 @@ button{
     row-gap: 10px;
 
 }
+.game-stats {
+      font-family: cursive;
 
+}
 .popup_result_content{
     position: fixed;
     background-color: white;

@@ -133,6 +133,7 @@ function setAfterLoginParameters(user_name, difficulty, type){
          // inserting button with image in newCard
          newCardButton = document.createElement("button");
          newCardButtonImage = document.createElement("img");
+         newCardButtonImage.classList.add('card-box');
 
          let newCardimageSource = "static/images/" + chosenBoard + "/" + imagesPairs[imageIndex];
          newCardButton.value = newCardimageSource;
@@ -219,6 +220,7 @@ function setAfterLoginParameters(user_name, difficulty, type){
         this.removeChild(this.childNodes[0]) // delete <img> tag from button Card
           newImgForButton = document.createElement("img");
             newImgForButton.src = this.value;
+            newImgForButton.classList.add('card-box');
         this.appendChild(newImgForButton) // inserting <img> tag for opened state
 
         let openedCardsCount = currentGameOpenedCards.length;
@@ -253,6 +255,7 @@ function setAfterLoginParameters(user_name, difficulty, type){
 
       button.removeChild(img);
     newImgForButton = document.createElement("img");
+    newImgForButton.classList.add('card-box');
     newImgForButton.src = closedImageCardSrc;
     button.appendChild(newImgForButton);
   }
