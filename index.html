@@ -12,10 +12,7 @@
     <div class="popup_login">
         <div class="overlay"></div>
         <div class="popup_login_content">
-            <div class="popup_title">Login</div>
-            <div class="login_input_name">
-                <input class="login_box" type="text" placeholder="Input name here:" maxlength="20">
-            </div>
+            <div class="popup_title">Start</div>
             <div class="login_levels">
                 <div class="title_level">
                     <span>Difficulty</span>
@@ -32,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="login_types">
+            <div class="login_types" style="margin-top: 10px">
                 <div class="title_type">
                     <span>Type</span>
                 </div>
@@ -63,7 +60,6 @@
             prepareBoard() function -->
         </div>
             <div class="stats-container">STATS
-                <div class="game-stats">Player's name: <span id="player-name" class="get_username">UserName</span></div>
                 <div class="game-stats">Time remaining: <span class="time-remain">0</span></div>
                 <div class="game-stats">Flips done: <span id="flips"></span></div>
                 <div class="game-stats">Left Cards Pairs: <span id="leftCardsPairs"></span></div>
@@ -94,17 +90,16 @@
     <div class="popup_result" hidden>
         <div class="overlay"></div>
         <div class="popup_result_content">
-            <div class="popup_title">Results</div>
+            <div class="popup_title">Current Results</div>
             <div class="popup_current_result">
-                <div class="result_title" style="font-size: 20px; font-weight: bold;">Current</div>
                 <div class="parameters">
                     <div class="name">
                         <div class="popup_title_s">Name</div>
-                        <div class="value">NeverGo</div>
+                        <div class="value"><input type="text" class="input_name" placeholder="Input your name"></div>
                     </div>
                     <div class="time">
                         <div class="popup_title_s">Time</div>
-                        <div class="value">10 sec</div>
+                        <div class="value">0</div>
                     </div>
                     <div class="flips">
                         <div class="popup_title_s">Flips</div>
@@ -114,30 +109,39 @@
                         <div class="popup_title_s">Score</div>
                         <div class="value">149 xp</div>
                     </div>
+                    <div class="difficulty">
+                        <div class="popup_title_s">Difficulty</div>
+                        <div class="value">Dif</div>
+                    </div>
+                </div>
+                <div class="save">
+                    <div class="btn_save">
+                        <div class="btn_save_result">Save</div>
+                    </div>
+                    <div></div>
                 </div>
             </div>
             <div class="popup_result_statistic">
-                <div class="result_statistic_pos">
-                    <div class="result_title">Low</div>
-                    <div class="result_results">
-                        1 - NeverGo - 1897xp
+                <div class="result_statistic_pos_easy">
+                    <div class="result_title">Easy</div>
+                        <div class="result_results">
+                            <div class="low_result">
+                                <div class="pos">1</div>
+                                <div class="name">SDFSDdfgdfgd</div>
+                                <div class="xp">11</div>
+                            </div>
+                        </div>
                     </div>
+                <div class="result_statistic_pos">
+                    <div class="result_title">Medium</div>
+                    <div class="result_results"></div>
                 </div>
                 <div class="result_statistic_pos">
-                    <div class="result_title">Middle</div>
-                    <div class="result_results">
-                        1 - NeverGo - 1897xp
-                    </div>
-                </div>
-                <div class="result_statistic_pos">
-                    <div class="result_title">High</div>
-                    <div class="result_results">
-                        1 - NeverGo - 1897xp
-                    </div>
+                    <div class="result_title">Hard</div>
                 </div>
             </div>
         </div>
-
+    </div>
 </body>
 <script src="game.js"></script>
 <script src="animated_countdown..js"></script>

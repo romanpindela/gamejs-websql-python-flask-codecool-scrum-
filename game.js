@@ -5,6 +5,8 @@ var userName = "";
 var userCounts = 0;
 var flipsDone = 0;
 var timeObj = Object();
+var results = []
+
 
 
 
@@ -17,6 +19,10 @@ var currentGuessedPairsCards = 0;
 var finishedGameState = false;
 var leftCardsPair = 0;
 let currentGameTime = 0;
+var currentResult = {
+          name: '', time: '', flips: '', score: '', difficulty: ''
+      }
+
 
 // game logic
 timeForUserToRemember = 5000;
@@ -79,8 +85,6 @@ function set_game_board(){
 }
 
 function setAfterLoginParameters(user_name, difficulty, type){
-    user_name_node = document.querySelector('.get_username');
-    user_name_node.innerHTML = user_name;
     chosenGameLevel = difficulty.toLowerCase();
     chosenBoard = type.toLowerCase();
 }
@@ -279,14 +283,12 @@ function updateleftCardsPairs(decrese){
   function loginPopup(){
     var lvl_buttons = document.body.getElementsByClassName('btn_lvl');
     var type_buttons = document.body.getElementsByClassName('btn_type');
-    let user_name_box = document.body.querySelectorAll('input.login_box')[0];
     let play_btn = document.body.querySelectorAll('.play_btn')[0];
     let popup_login = document.body.getElementsByClassName('popup_login')[0];
     let page_content = document.body.querySelector('body .page');
     Object(play_btn).addEventListener('click', () => {
         let cookies = actual_Cookies();
-        if (cookies['difficulty'].length > 0 && user_name_box.value.length > 0 && cookies['type'].length > 0){
-            set_cookie('user_name', user_name_box.value);
+        if (cookies['difficulty'].length > 0 && cookies['type'].length > 0){
             setAfterLoginParameters(actual_Cookies()['user_name'], actual_Cookies()['difficulty'], actual_Cookies()['type']);
             setTimeout(() => {
                 Object(popup_login).hidden = true;
@@ -350,15 +352,85 @@ function checkEndGame(){
       if (currentGuessedPairsCards === gameLevels[chosenGameLevel]){
           finishedGameState = true;
           clearInterval(timeObj);
+          showResults();
       } else {
           false;
       }
 }
 
+function showResults(){
+      let popupResult = document.querySelector('.popup_result');
+      popupResult.hidden = false;
+      setCurrentResults();
+      setAllResults();
+}
+
+function setCurrentResults(){
+      currentResult = {
+          name: '',
+          time: currentGameTime,
+          flips: flipsDone,
+          score: parseInt(flipsDone) + parseInt(currentGameTime),
+          difficulty: actual_Cookies()['difficulty']
+      }
+      let currentResultObj = document.querySelectorAll('.popup_current_result .value');
+      let countForResultObj = 0;
+      for (let el in currentResult){
+          if (el != 'name'){
+              currentResultObj[countForResultObj].innerHTML = currentResult[el];
+          }
+          countForResultObj++;
+      }
+      document.querySelector('.save .btn_save_result').addEventListener('click', event_SaveButton);
+}
+
+function event_SaveButton(){
+      let userName = document.querySelector('.popup_result_content .input_name').value;
+      if (userName.length > 0) {
+          currentResult.name = userName;
+          results.push(currentResult);
+          create_results();
+          document.querySelector('.save .btn_save_result').removeEventListener('click', event_SaveButton);
+      }
+      else alert('Input your name Please :)');
+}
+
+function setAllResults(){
+    sortResultByScore();
+
+}
+
+function sortResultByScore(){
+      for (let i = 0; i < results.length; i++)
+      for (let j = 0; j < results.length - 1; j++){
+          if (results[j]['score'] < results[j+1]['score']){
+              let tmp = results[j];
+              results[j] = results[j+1];
+              results[j+1] = tmp;
+          }
+      }
+}
+
+function create_results(){
+      for (let i = 0; i < results.length; i++){
+          let parent = document.querySelector('.result_statistic_pos_easy .result_results');
+          let low_result = document.createElement('div');
+          low_result.classList.add('low_result');
+          let pos = document.createElement('div');
+          pos.classList.add('pos');
+          pos.innerHTML = i + 1;
+          let name = document.createElement('div');
+          name.classList.add('name');
+          name.innerHTML = results[i].name;
+          let xp = document.createElement('div');
+          xp.classList.add('xp');
+          xp.innerHTML = results[i].score;
+          low_result.appendChild(pos);
+          low_result.appendChild(name);
+          low_result.appendChild(xp);
+          parent.appendChild(low_result);
+      }
+}
 
 initGame();
 
-function game(){
-    initGame();
-
-}
