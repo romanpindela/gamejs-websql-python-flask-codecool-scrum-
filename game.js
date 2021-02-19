@@ -132,11 +132,14 @@ function setAfterLoginParameters(user_name, difficulty, type){
          var newCard = document.createElement("div");
 
          newCard.classList.add('card');
+         newCard.classList.add('card-box');
          newCard.id = imageIndex;
 
          // inserting button with image in newCard
          newCardButton = document.createElement("button");
+         //newCardButton.classList.add('card-background-gray');
          newCardButtonImage = document.createElement("img");
+         newCardButtonImage.classList.add('card-box');
 
          let newCardimageSource = "static/images/" + chosenBoard + "/" + imagesPairs[imageIndex];
          newCardButton.value = newCardimageSource;
@@ -196,13 +199,33 @@ function setAfterLoginParameters(user_name, difficulty, type){
       blockUserClickingWhileCheckingPair = false;
   }
 
-  function setCardColor(color){
+  function changeOpenedCardsColor(color){
       if (color === "green"){
-				// finalMessage.classList.add('show');
+            currentGameOpenedCards[0].classList.remove('card-background-grey');
+            currentGameOpenedCards[0].classList.add('card-background-green');
+            currentGameOpenedCards[0].classList.remove('card-background-red');
+
+            currentGameOpenedCards[1].classList.remove('card-background-grey');
+            currentGameOpenedCards[1].classList.add('card-background-green');
+            currentGameOpenedCards[1].classList.remove('card-background-red');
+            
       } else if (color === "red"){
+            currentGameOpenedCards[0].classList.remove('card-background-grey');
+            currentGameOpenedCards[0].classList.add('card-background-red');
+            currentGameOpenedCards[0].classList.remove('card-background-green');
+
+            currentGameOpenedCards[1].classList.remove('card-background-grey');
+            currentGameOpenedCards[1].classList.remove('card-background-green');
+            currentGameOpenedCards[1].classList.add('card-background-red');
 
       } else if (color === "grey"){
+            currentGameOpenedCards[0].classList.remove('card-background-red');
+            currentGameOpenedCards[0].classList.remove('card-background-green');
+            currentGameOpenedCards[0].classList.add('card-background-grey');
 
+            currentGameOpenedCards[1].classList.remove('card-background-red');
+            currentGameOpenedCards[1].classList.remove('card-background-green');
+            currentGameOpenedCards[1].classList.add('card-background-grey');
       }
 
   }
@@ -223,6 +246,7 @@ function setAfterLoginParameters(user_name, difficulty, type){
         this.removeChild(this.childNodes[0]) // delete <img> tag from button Card
           newImgForButton = document.createElement("img");
             newImgForButton.src = this.value;
+            newImgForButton.classList.add('card-box');
         this.appendChild(newImgForButton) // inserting <img> tag for opened state
 
         let openedCardsCount = currentGameOpenedCards.length;
@@ -230,15 +254,19 @@ function setAfterLoginParameters(user_name, difficulty, type){
             blockUserClickingWhileCheckingPair = true;
             moveUserMovesCounter(1);
             if(currentGameOpenedCards[0].value === currentGameOpenedCards[1].value){
+                changeOpenedCardsColor("green");
                 setTimeout(cardsPairMatched,1000);
                 updateleftCardsPairs(1)
             } else {
+                changeOpenedCardsColor("red");
                 setTimeout(cardsPairUnmatched,1000);
+                //changeOpenedCardsColor("grey");
             }
         }
     }
     console.log(currentGameOpenedCards);
   }
+
 
   function initStats(){
       leftCardsPair = gameLevels[chosenGameLevel];
@@ -257,6 +285,7 @@ function setAfterLoginParameters(user_name, difficulty, type){
 
       button.removeChild(img);
     newImgForButton = document.createElement("img");
+    newImgForButton.classList.add('card-box');
     newImgForButton.src = closedImageCardSrc;
     button.appendChild(newImgForButton);
   }
