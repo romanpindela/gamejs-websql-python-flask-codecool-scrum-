@@ -63,12 +63,10 @@ body {
     object-position: 2px 2px;
 }
 
-border-shadown-grey {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
 
 button{
     border: 0px;
+    border-radius: 20px;
 }
 
 .stats-container,
@@ -303,4 +301,23 @@ button{
     font-weight: bold;
     bottom: 0;
     padding: 0;
+}
+
+
+.card-background-gray {
+    box-shadow: -1px 1px 32px -1px rgba(152,152,152,1);
+    -webkit-box-shadow: -1px 1px 32px -1px rgba(152,152,152,1);
+    -moz-box-shadow: -1px 1px 32px -1px rgba(152,152,152,1);
+}
+
+.card-background-green {
+    box-shadow: -1px 1px 32px -1px rgba(40,255,78,1);
+    -webkit-box-shadow: -1px 1px 32px -1px rgba(40,255,78,1);
+    -moz-box-shadow: -1px 1px 32px -1px rgba(40,255,78,1);
+}
+
+.card-background-red {
+    box-shadow: -1px 1px 32px -1px rgba(255,32,32,1);
+    -webkit-box-shadow: -1px 1px 32px -1px rgba(255,32,32,1);
+    -moz-box-shadow: -1px 1px 32px -1px rgba(255,32,32,1);
 }
