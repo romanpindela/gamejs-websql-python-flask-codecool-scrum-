@@ -1,14 +1,3 @@
-
-function checkEndGame(){
-      if (currentGuessedPairsCards === gameLevels[chosenGameLevel]){
-          finishedGameState = true;
-          clearInterval(timeObj);
-          showResults();
-      } else {
-          false;
-      }
-}
-
 function showResults(){
       let popupResult = document.querySelector('.popup_result');
       popupResult.hidden = false;

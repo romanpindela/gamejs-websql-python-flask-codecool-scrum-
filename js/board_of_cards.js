@@ -1,13 +1,3 @@
-
-function timeCount(){
-    let time_node = document.querySelector('.time-remain');
-    timeObj = setInterval(() => {
-        currentGameTime++;
-        time_node.innerHTML = currentGameTime.toString();
-    }, 1000);
-
-}
-
 function set_game_board(){
     console.log(images);
     currentGameDrawnImages = drawImagesForLevel(shuffleCards(images), chosenGameLevel); // pick first shuffled cards for current level
@@ -23,8 +13,6 @@ function set_game_board(){
     setTimeout(closeAllCards, timeForUserToRemember, cards);
     blockUserClickingWhileCheckingPair = false;
 }
-
-
 
   /*
   * Steps behind logic for creating random size board of card with random images
@@ -230,4 +218,14 @@ function updateleftCardsPairs(decrese){
       leftCardsPair = leftCardsPair - decrese;
       leftCardsPairHtml = document.getElementById('leftCardsPairs');
       leftCardsPairHtml.innerText = leftCardsPair;
+}
+
+
+function timeCount(){
+    let time_node = document.querySelector('.time-remain');
+    timeObj = setInterval(() => {
+        currentGameTime++;
+        time_node.innerHTML = currentGameTime.toString();
+    }, 1000);
+
 }

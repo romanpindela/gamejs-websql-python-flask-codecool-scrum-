@@ -8,7 +8,6 @@ var timeObj = Object();
 var results = []
 
 
-
 // current game parameters
 var currentGameDrawnImages = [];
 var currentGameDrawnImagesPairs = [];
@@ -20,7 +19,6 @@ let currentGameTime = 0;
 var currentResult = {
           name: '', time: '', flips: '', score: '', difficulty: ''
       }
-
 
 // game logic
 timeForUserToRemember = 5000;
@@ -51,12 +49,19 @@ function initGame() {
     loginPopup();
 };
 
-
+function checkEndGame(){
+      if (currentGuessedPairsCards === gameLevels[chosenGameLevel]){
+          finishedGameState = true;
+          clearInterval(timeObj);
+          showResults();
+      } else {
+          false;
+      }
+}
 
 function set_cookie(key, value){
       document.cookie = `${key}=${value}`;
 }
-
 
 initGame();
 
